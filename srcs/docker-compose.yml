@@ -1,0 +1,65 @@
+services:
+  nginx:
+    container_name: nginx
+    build: requirements/nginx/.
+    image: nginx
+    ports:
+      - "443:443"     # for HTPPS
+    volumes:
+      - website:/var/www/html
+    networks:
+      - inception
+    depends_on:
+      - wordpress     # wait for wordpress to be ready
+    restart: on-failure
+
+  mariadb:
+    container_name: mariadb
+    build: requirements/mariadb/.
+    image: mariadb
+    ports:
+      - "3306:3306"
+    volumes:
+      - database:/var/lib/mysql
+    networks:
+      - inception
+    restart: on-failure
+
+  wordpress:
+    container_name: wordpress
+    build: requirements/wordpress/.
+    image: wordpress
+    ports:
+      - "9000:9000"
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: wp_nimda
+      WORDPRESS_DB_PASSWORD: administrator
+      WORDPRESS_DB_NAME: wp_database
+    volumes:
+      - website:/var/www/html
+    networks:
+      - inception
+    depends_on:
+      - mariadb
+    restart: on-failure
+
+volumes:
+  website:
+    driver: local
+    driver_opts:
+      type: none    # volume not created by docker (host directory)
+      device: /home/stouitou/data/website
+      o: bind       # bind local and host directories
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/stouitou/data/database
+      o: bind
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
