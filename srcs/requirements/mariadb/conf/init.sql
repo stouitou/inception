@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS wp_database;
-CREATE USER IF NOT EXISTS 'wp_nimda'@'%' IDENTIFIED BY 'administrator';
-CREATE USER IF NOT EXISTS 'stouitou'@'%' IDENTIFIED BY 'user_1';
-GRANT ALL PRIVILEGES ON wp_database.* TO 'wp_nimda'@'%';
+CREATE DATABASE IF NOT EXISTS wordpress_db;
+CREATE USER IF NOT EXISTS 'main_user'@'%' IDENTIFIED BY '1234';
+CREATE USER IF NOT EXISTS 'stouitou'@'%' IDENTIFIED BY 'st_password';
+GRANT ALL PRIVILEGES ON wordpress_db.* TO 'main_user'@'%';
 FLUSH PRIVILEGES;

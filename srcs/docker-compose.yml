@@ -1,7 +1,7 @@
 services:
   nginx:
     container_name: nginx
-    build: requirements/nginx/.
+    build: ./requirements/nginx/.
     image: nginx
     ports:
       - "443:443"     # for HTPPS
@@ -15,13 +15,13 @@ services:
 
   mariadb:
     container_name: mariadb
-    build: requirements/mariadb/.
+    build: ./requirements/mariadb/.
     image: mariadb
-    ports:
-      - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: administrator
-      MYSQL_DATABASE: wp_database
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: wordpress_db
+      MYSQL_USER: main_user
+      MYSQL_PASSWORD: '1234'
     volumes:
       - database:/var/lib/mysql
     networks:
@@ -30,15 +30,13 @@ services:
 
   wordpress:
     container_name: wordpress
-    build: requirements/wordpress/.
+    build: ./requirements/wordpress/.
     image: wordpress
-    ports:
-      - "9000:9000"
     environment:
-      WORDPRESS_DB_HOST: mariadb:3306
-      WORDPRESS_DB_USER: wp_nimda
-      WORDPRESS_DB_PASSWORD: administrator
-      WORDPRESS_DB_NAME: wp_database
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: main_user
+      WORDPRESS_DB_PASSWORD: '1234'
+      WORDPRESS_DB_NAME: wordpress_db
     volumes:
       - website:/var/www/html
     networks:
@@ -49,12 +47,14 @@ services:
 
 volumes:
   website:
+    name: website
     driver: local
     driver_opts:
       type: none    # volume not created by docker (host directory)
       device: /home/stouitou/data/website
       o: bind       # bind local and host directories
   database:
+    name: database
     driver: local
     driver_opts:
       type: none
