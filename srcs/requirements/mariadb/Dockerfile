@@ -9,12 +9,12 @@ RUN apt update && apt upgrade -y
 
 # Get MariaDB
 RUN apt install -y mariadb-server
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt clean && rm -rf /var/lib/apt/lists/*
 
 # Add user stouitou to MariaDB
 COPY conf/init.sql tools/entrypoint.sh /tmp/.
 RUN chmod +x /tmp/entrypoint.sh
 
-# EXPOSE 3306
+EXPOSE 3306
 
 ENTRYPOINT ["/tmp/entrypoint.sh"]

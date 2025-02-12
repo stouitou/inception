@@ -19,6 +19,9 @@ services:
     image: mariadb
     ports:
       - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: administrator
+      MYSQL_DATABASE: wp_database
     volumes:
       - database:/var/lib/mysql
     networks:
@@ -32,7 +35,7 @@ services:
     ports:
       - "9000:9000"
     environment:
-      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_HOST: mariadb:3306
       WORDPRESS_DB_USER: wp_nimda
       WORDPRESS_DB_PASSWORD: administrator
       WORDPRESS_DB_NAME: wp_database

@@ -4,7 +4,7 @@ FROM debian:bullseye
 # MAINTAINER instruction in deprecated and LABEL is now prefered
 LABEL maintainer="stouitou stouitou@student.42.fr"
 
-WORKDIR /home/stouitou
+# WORKDIR /home/stouitou
 
 # Update packages
 RUN apt update && apt upgrade -y
@@ -22,7 +22,7 @@ RUN echo "Package: *" > /etc/apt/preferences.d/99nginx && \
 	echo "Pin: release o=nginx" >> /etc/apt/preferences.d/99nginx && \
 	echo "Pin-Priority: 900" >> /etc/apt/preferences.d/99nginx
 # 5. Install the nginx package
-RUN apt update && apt install -y nginx
+RUN apt install -y nginx
 # 6. Clean up
 RUN apt clean && rm -rf /var/lib/apt/lists/*
 
@@ -32,7 +32,8 @@ RUN mkdir -p /etc/nginx/ssl && \
 	-newkey rsa:2048 \
 	-keyout /etc/nginx/ssl/private.key \
 	-out /etc/nginx/ssl/certificate.crt -subj "/C=FR/ST=Paris/O=inception/CN=stouitou.42.fr/"
-COPY ./conf /etc/nginx/conf.d/
+COPY ./conf/nginx.conf /etc/nginx/sites-available/.
+RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled/nginx.conf
 
 # Expose port 80 for Nginx
 EXPOSE 443

@@ -1,7 +1,8 @@
-define( 'DB_NAME', 'mariadb' );
+<?php
+define( 'DB_NAME', 'wp_database' );
 define( 'DB_USER', 'wp_nimda' );
 define( 'DB_PASSWORD', 'administrator' );
-define( 'DB_HOSTNAME', 'mariadb' );
+define( 'DB_HOST', 'mariadb' );
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
@@ -14,3 +15,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once ABSPATH . 'wp-settings.php';
+?>

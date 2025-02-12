@@ -31,7 +31,6 @@ COPY conf/wp-config.php /var/www/html
 # 	sed -i "s|database_name_here|mariadb|" wp-config-sample.php && \
 # 	mv wp-config-sample.php wp-config.php
 RUN sed -i "s|listen = /run/php/php7.4-fpm.sock|listen = 9000|" /etc/php/7.4/fpm/pool.d/www.conf
-
 # Change group appartenance
 RUN chown -R www-data:www-data /var/www/html && \
 	chmod -R 755 /var/www/html

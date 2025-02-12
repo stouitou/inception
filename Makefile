@@ -19,6 +19,8 @@ clean: stop down
 
 fclean: clean
 	docker image prune -a
+	sudo rm -rf /home/stouitou/data/website
+	sudo rm -rf /home/stouitou/data/database
 
 re: fclean all
 
