@@ -1,6 +1,6 @@
 <?php
 define( 'DB_NAME', 'wordpress_db' );
-define( 'DB_USER', 'main_user' );
+define( 'DB_USER', 'wp_user' );
 define( 'DB_PASSWORD', '1234' );
 define( 'DB_HOST', 'mariadb' );
 define( 'DB_CHARSET', 'utf8' );

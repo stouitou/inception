@@ -12,4 +12,4 @@ RUN apt clean && rm -rf /var/lib/apt/lists/*
 COPY conf/init.sql tools/entrypoint.sh /tmp/.
 RUN chmod +x /tmp/entrypoint.sh
 
-ENTRYPOINT ["/tmp/entrypoint.sh"]
+CMD ["/tmp/entrypoint.sh"]

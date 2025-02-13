@@ -4,6 +4,10 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 	mysql_install_db --user=mysql --datadir=/var/lib/mysql
 fi
 
-sed -i "s|= 127.0.0.1|= 0.0.0.0|" /etc/mysql/mariadb.conf.d/50-server.cnf
+mkdir -p /run/mysqld
+chown -R mysql:mysql /run/mysqld
 
-exec mysqld_safe --init-file=/tmp/init.sql
+sed -i "s|= 127.0.0.1|= 0.0.0.0|" /etc/mysql/mariadb.conf.d/50-server.cnf
+sed -i "s|basedir|port\t\t\t= 3306\nbasedir|" /etc/mysql/mariadb.conf.d/50-server.cnf
+
+exec mysqld --init-file=/tmp/init.sql

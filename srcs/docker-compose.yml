@@ -13,28 +13,13 @@ services:
       - wordpress     # wait for wordpress to be ready
     restart: on-failure
 
-  mariadb:
-    container_name: mariadb
-    build: ./requirements/mariadb/.
-    image: mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: wordpress_db
-      MYSQL_USER: main_user
-      MYSQL_PASSWORD: '1234'
-    volumes:
-      - database:/var/lib/mysql
-    networks:
-      - inception
-    restart: on-failure
-
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress/.
     image: wordpress
     environment:
       WORDPRESS_DB_HOST: mariadb
-      WORDPRESS_DB_USER: main_user
+      WORDPRESS_DB_USER: wp_user
       WORDPRESS_DB_PASSWORD: '1234'
       WORDPRESS_DB_NAME: wordpress_db
     volumes:
@@ -43,6 +28,21 @@ services:
       - inception
     depends_on:
       - mariadb
+    restart: on-failure
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb/.
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: wordpress_db
+      MYSQL_USER: wp_user
+      MYSQL_PASSWORD: '1234'
+    volumes:
+      - database:/var/lib/mysql
+    networks:
+      - inception
     restart: on-failure
 
 volumes:
