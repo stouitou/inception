@@ -44,14 +44,14 @@ volumes:
     driver: local
     driver_opts:
       type: none    # volume not created by docker (host directory)
-      device: /home/stouitou/data/website
+      device: ${HOME}/data/website
       o: bind       # bind local and host directories
   database:
     name: database
     driver: local
     driver_opts:
       type: none
-      device: /home/stouitou/data/database
+      device: ${HOME}/data/database
       o: bind
 
 networks:

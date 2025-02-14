@@ -7,8 +7,10 @@ fi
 mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 
+# Allow other dockers to communicate with database
 sed -i "s|= 127.0.0.1|= 0.0.0.0|" /etc/mysql/mariadb.conf.d/50-server.cnf
-sed -i "s|basedir|port\t\t\t= 3306\nbasedir|" /etc/mysql/mariadb.conf.d/50-server.cnf
 
+# Create a file with the values of the variables in template file
 envsubst < /tmp/init.template.sql > /tmp/init.sql
+
 exec mysqld --init-file=/tmp/init.sql

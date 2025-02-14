@@ -3,11 +3,7 @@ NAME = inception
 
 DOCKER_COMPOSE = ./srcs/docker-compose.yml
 
-SERVICES = nginx \
-	   mariadb \
-	   wordpress
-
-VOLUMES_DIR = /home/stouitou/data
+VOLUMES_DIR = ${HOME}/data
 
 
 
@@ -19,8 +15,8 @@ clean: stop down
 
 fclean: clean
 	docker image prune -a
-	sudo rm -rf /home/stouitou/data/website
-	sudo rm -rf /home/stouitou/data/database
+	sudo rm -rf ${VOLUMES_DIR}
+	sudo sed -i "/stouitou.42.fr/d" /etc/hosts
 
 re: fclean all
 
@@ -37,7 +33,9 @@ down:
 	docker compose -f ${DOCKER_COMPOSE} down
 
 setup:
-	mkdir -p /home/stouitou/data/website
-	mkdir -p /home/stouitou/data/database
+	mkdir -p ${VOLUMES_DIR}
+	mkdir -p ${VOLUMES_DIR}/website
+	mkdir -p ${VOLUMES_DIR}/database
+	sudo sed -i "s|127.0.0.1|127.0.0.1\tstouitou.42.fr\n127.0.0.1|" /etc/hosts
 
 .PHONY: all clean fclean re up start stop down setup
