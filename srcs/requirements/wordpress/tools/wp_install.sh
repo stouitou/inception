@@ -10,17 +10,11 @@ cd /var/www/html/
 
 wp core download --allow-root
 
-# # attendre
-# curl -sSL https://github.com/vishnubob/wait-for-it/raw/master/wait-for-it.sh -o /usr/local/bin/wait-for-it.sh
-# chmod +x /usr/local/bin/wait-for-it.sh
-
-# /usr/local/bin/wait-for-it.sh mariadb:3306 -- wp config create --dbname=wordpress_db --dbuser=wp_user --dbpass=1234 --dbhost=mariadb --allow-root
-
-wp config create --dbname=wordpress_db --dbuser=wp_user --dbpass=1234 --dbhost=mariadb --allow-root
+wp config create --dbname=${MYSQL_DATABASE} --dbuser=${MYSQL_ADMIN} --dbpass=${MYSQL_ADMIN_PASSWORD} --dbhost=$MYSQL_HOST --allow-root
 
 chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
 
-wp core install --url='stouitou.42.fr' --title='My WordPress Site' --admin_user='admin' --admin_password='password' --admin_email='stouitou@student.42.fr' --allow-root
+wp core install --url=${DOMAIN_NAME} --title="${WP_TITLE}" --admin_user=${WP_ADMIN} --admin_password="${WP_ADMIN_PASSWORD}" --admin_email=${EMAIL_ADDRESS} --allow-root
 
 sed -i "s|listen = /run/php/php7.4-fpm.sock|listen = 9000|" /etc/php/7.4/fpm/pool.d/www.conf
 

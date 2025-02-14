@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-LABEL maintainer="stouitou stouitou@student.42.fr"
+LABEL maintainer="stouitou ${EMAIL_ADDRESS}"
 
 RUN apt update && apt upgrade -y
 

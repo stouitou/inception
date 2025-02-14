@@ -2,7 +2,7 @@
 FROM debian:bullseye
 
 # MAINTAINER instruction is deprecated and LABEL is now prefered
-LABEL maintainer="stouitou stouitou@student.42.fr"
+LABEL maintainer="stouitou ${EMAIL_ADDRESS}"
 
 # Update packages
 RUN apt update && apt upgrade -y
@@ -16,7 +16,7 @@ RUN mkdir -p /etc/nginx/ssl && \
 	openssl req -x509 -nodes -days 365 \
 	-newkey rsa:2048 \
 	-keyout /etc/nginx/ssl/private.key \
-	-out /etc/nginx/ssl/certificate.crt -subj "/C=FR/ST=Paris/O=inception/CN=stouitou.42.fr/"
+	-out /etc/nginx/ssl/certificate.crt -subj "/C=FR/ST=Paris/O=inception/CN=${DOMAIN_NAME}/"
 
 # Copy configuration file and bind it to be considered
 COPY ./conf/nginx.conf /etc/nginx/sites-available/nginx.conf

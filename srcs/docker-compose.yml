@@ -3,6 +3,7 @@ services:
     container_name: nginx
     build: ./requirements/nginx/.
     image: nginx
+    env_file: .env
     ports:
       - "443:443"     # for HTPPS
     volumes:
@@ -17,11 +18,7 @@ services:
     container_name: wordpress
     build: ./requirements/wordpress/.
     image: wordpress
-    environment:
-      WORDPRESS_DB_HOST: mariadb
-      WORDPRESS_DB_USER: wp_user
-      WORDPRESS_DB_PASSWORD: '1234'
-      WORDPRESS_DB_NAME: wordpress_db
+    env_file: .env
     volumes:
       - website:/var/www/html
     networks:
@@ -34,11 +31,7 @@ services:
     container_name: mariadb
     build: ./requirements/mariadb/.
     image: mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: wordpress_db
-      MYSQL_USER: wp_user
-      MYSQL_PASSWORD: '1234'
+    env_file: .env
     volumes:
       - database:/var/lib/mysql
     networks:
