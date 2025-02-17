@@ -19,8 +19,8 @@ chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
 # Configure WordPress
 wp core install --url="${DOMAIN_NAME}" --title="${WP_TITLE}" --admin_user="${WP_ADMIN}" --admin_password="${WP_ADMIN_PASSWORD}" --admin_email=${MAINTAINER} --allow-root
 
-wp user create "${MYSQL_ADMIN}" "stouitou1@student.42.fr" --role=administrator --user_pass="${MYSQL_ADMIN_PASSWORD}" --allow-root
-wp user create "${MYSQL_USER}" "stouitou2@student.42.fr" --role=editor --user_pass="${MYSQL_USER_PASSWORD}" --allow-root
+# Create additional user
+wp user create "${WP_USER}" "jlabonde@student.42.fr" --role=editor --user_pass="${WP_USER_PASSWORD}" --allow-root
 
 # Allow WordPress to communicate on port 9000
 sed -i "s|listen = /run/php/php7.4-fpm.sock|listen = 9000|" /etc/php/7.4/fpm/pool.d/www.conf

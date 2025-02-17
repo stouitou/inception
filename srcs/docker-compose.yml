@@ -2,7 +2,7 @@ services:
   nginx:
     container_name: nginx
     build: ./requirements/nginx/.
-    image: nginx
+    image: nginx:stouitou
     env_file: .env
     ports:
       - "443:443"     # for HTPPS
@@ -17,7 +17,7 @@ services:
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress/.
-    image: wordpress
+    image: wordpress:stouitou
     env_file: .env
     volumes:
       - website:/var/www/html
@@ -30,7 +30,7 @@ services:
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb/.
-    image: mariadb
+    image: mariadb:stouitou
     env_file: .env
     volumes:
       - database:/var/lib/mysql
