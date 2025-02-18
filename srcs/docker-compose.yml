@@ -2,12 +2,12 @@ services:
   nginx:
     container_name: nginx
     build: ./requirements/nginx/.
-    image: nginx:stouitou
+    image: nginx
     env_file: .env
     ports:
       - "443:443"     # for HTPPS
     volumes:
-      - website:/var/www/html
+      - website:/var/www/wordpress
     networks:
       - inception
     depends_on:
@@ -17,10 +17,10 @@ services:
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress/.
-    image: wordpress:stouitou
+    image: wordpress
     env_file: .env
     volumes:
-      - website:/var/www/html
+      - website:/var/www/wordpress
     networks:
       - inception
     depends_on:
@@ -30,7 +30,7 @@ services:
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb/.
-    image: mariadb:stouitou
+    image: mariadb
     env_file: .env
     volumes:
       - database:/var/lib/mysql

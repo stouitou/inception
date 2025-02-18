@@ -12,11 +12,14 @@ RUN apt install -y nginx openssl
 RUN apt clean && rm -rf /var/lib/apt/lists/*
 
 # Generate self-signed certificate for nginx
+# -x509 = auto-signed cetificate
+# -nodes = uncrypted key
+# -new = non-existent key
 RUN mkdir -p /etc/nginx/ssl && \
-	openssl req -x509 -nodes -days 365 \
-	-newkey rsa:2048 \
-	-keyout /etc/nginx/ssl/private.key \
-	-out /etc/nginx/ssl/certificate.crt -subj "/C=FR/ST=Paris/O=inception/CN=${DOMAIN_NAME}/"
+	openssl req -x509 -nodes -new \
+	-keyout /etc/nginx/ssl/inception.key \
+	-out /etc/nginx/ssl/inception.crt \
+	-subj "/C=FR/ST=Paris/O=inception/CN=${DOMAIN_NAME}/"
 
 # Copy configuration file and bind it to be considered by service
 COPY ./conf/nginx.conf /etc/nginx/sites-available/nginx.conf

@@ -14,7 +14,7 @@ ${NAME}: up
 clean: stop down
 
 fclean: clean
-	docker image prune -a
+	docker image prune -a -f
 	sudo rm -rf ${VOLUMES_DIR}
 	sudo sed -i "/stouitou.42.fr/d" /etc/hosts
 
@@ -30,7 +30,7 @@ stop:
 	docker compose -f ${DOCKER_COMPOSE} stop
 
 down:
-	docker compose -f ${DOCKER_COMPOSE} down
+	docker compose -f ${DOCKER_COMPOSE} down -v
 
 setup:
 	mkdir -p ${VOLUMES_DIR}
