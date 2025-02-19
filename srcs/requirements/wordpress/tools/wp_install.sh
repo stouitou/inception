@@ -1,5 +1,9 @@
 #!/bin/bash
 
+MYSQL_ADMIN_PASSWORD=$(cat /run/secrets/mysql_admin_password)
+WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
+WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
+
 wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www && cd /var/www && \
 	tar -xzf wordpress-6.0-fr_FR.tar.gz && rm -f wordpress-6.0-fr_FR.tar.gz
 
@@ -31,12 +35,12 @@ wp core install \
 	--title="${WP_TITLE}" \
 	--admin_user="${WP_ADMIN}" \
 	--admin_password="${WP_ADMIN_PASSWORD}" \
-	--admin_email=${MAINTAINER} \
+	--admin_email=${WP_ADMIN_EMAIL} \
 	--allow-root
 
 # Create additional user
 wp user create "${WP_USER}" \
-	"jlabonde@student.42.fr" \
+	${WP_USER_EMAIL} \
 	--user_pass="${WP_USER_PASSWORD}" \
 	--role=contributor \
 	--allow-root
